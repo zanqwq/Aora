@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { icons } from '../constants';
 
 const SearchInput = ({
-  value, placeholder, onChange, otherStyles, ...props
+  value, placeholder, onChange, otherStyles, onPress, ...props
 }) => (
   <View className="w-full h-16 px-4
       bg-black-100 rounded-2xl
@@ -21,7 +21,7 @@ const SearchInput = ({
       onChangeText={onChange}
     />
 
-    <TouchableOpacity activeOpacity={0.5}>
+    <TouchableOpacity activeOpacity={0.5} onPress={onPress}>
       <Image className="w-5 h-5" source={icons.search} resizeMode="contain" />
     </TouchableOpacity>
   </View>

@@ -9,7 +9,7 @@ import * as Animatable from 'react-native-animatable';
 import { ResizeMode, Video } from 'expo-av';
 import { icons } from '../constants';
 
-const TrendingItem = ({ video, active }) => {
+const TrendingItem = ({ video: videoDoc, active }) => {
   const [playing, setPlaying] = useState(false);
 
   return (
@@ -23,7 +23,7 @@ const TrendingItem = ({ video, active }) => {
     >
       {playing ? (
         <Video
-          source={{ uri: video.vedio }}
+          source={{ uri: videoDoc.video }}
           className="w-40 h-60 rounded-[35px] my-5 bg-black/40"
           resizeMode={ResizeMode.CONTAIN}
           useNativeControls
@@ -37,7 +37,7 @@ const TrendingItem = ({ video, active }) => {
       ) : (
         <TouchableOpacity className="relative justify-center items-center" onPress={() => setPlaying(true)}>
           <ImageBackground
-            source={{ uri: video.thumbnail }}
+            source={{ uri: videoDoc.thumbnail }}
             resizeMode="cover"
             className="w-40 h-60 rounded-[35px] my-5 shadow-lg shadow-white overflow-hidden"
           />

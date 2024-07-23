@@ -4,19 +4,21 @@ import {
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
+import { router } from 'expo-router';
 import { useGlobalContext } from '../../context/globalContext';
 import SearchInput from '../../components/SearchInput';
 import { images } from '../../constants';
 import Trending from '../../components/Trending';
 import EmptyState from '../../components/EmptyState';
 import useAppwrite from '../../lib/useAppwrite';
-import { getAllVideos } from '../../lib/appwrite';
+import { getAllVideos, updateVideoFollowers } from '../../lib/appwrite';
 import VideoCard from '../../components/VideoCard';
 
 const Home = () => {
   const { user } = useGlobalContext();
   const { data: videos, invokeFetch } = useAppwrite(getAllVideos);
   const { data: latestVideos, invokeFetch: invokeLatestFetch } = useAppwrite(getAllVideos);
+  const [query, setQuery] = useState('');
 
   const [refreshing, setRefreshing] = useState(false);
   const handleRefresh = async () => {
@@ -45,7 +47,14 @@ const Home = () => {
       </View>
 
       <View className="search-view">
-        <SearchInput placeholder="Search for a video topic" />
+        <SearchInput
+          value={query}
+          placeholder="Search for a video topic"
+          onChange={setQuery}
+          onPress={() => {
+            router.push(`/search/${query}`);
+          }}
+        />
       </View>
 
       <View className="latest-video w-full flex-1">
@@ -66,7 +75,19 @@ const Home = () => {
         ListEmptyComponent={<EmptyState title="No Video Found" subtitle="Be the first uploader" />}
         renderItem={({ item }) => (
           <View className="mb-5 px-2">
-            <VideoCard video={item} />
+            <VideoCard
+              video={item}
+              onShareClick={() => {
+                console.log('@ share');
+              }}
+              onCommentClick={() => {
+                console.log('@ comment');
+              }}
+              onLikeClick={() => {
+                console.log('@ like');
+                // updateVideoFollowers(item.$id, user.$id);
+              }}
+            />
           </View>
         )}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}

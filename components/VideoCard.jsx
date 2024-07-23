@@ -7,8 +7,11 @@ import { icons } from '../constants';
 
 const VideoCard = ({
   video: {
-    title, thumbnail, vedio: uri, $createdAt, creator: { username, avatar } = {},
+    title, thumbnail, video: uri, $createdAt, creator: { username, avatar } = {},
   },
+  onShareClick,
+  onCommentClick,
+  onLikeClick,
 }) => {
   const [playing, setPlaying] = useState(false);
 
@@ -57,8 +60,17 @@ const VideoCard = ({
       <Text className="text-gray-50 text-xl mb-2">{title}</Text>
 
       <View className="flex-row justify-around items-center">
-        {[icons.share, icons.comments, icons.like].map((icon) => (
-          <TouchableOpacity activeOpacity={0.4}>
+        {[icons.share, icons.comments, icons.like].map((icon, i) => (
+          <TouchableOpacity
+            activeOpacity={0.4}
+            key={i}
+            onPress={() => {
+              const handler = [onShareClick, onCommentClick, onLikeClick][i];
+              if (typeof handler === 'function') {
+                handler();
+              }
+            }}
+          >
             <Image key={icon} source={icon} className="w-8 h-8" resizeMode="cover" />
           </TouchableOpacity>
           // <Text key={icon} className="text-gray-50">{icon}</Text>

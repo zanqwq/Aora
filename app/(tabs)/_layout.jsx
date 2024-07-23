@@ -37,9 +37,7 @@ const _layout = () => (
   >
     {[
       { name: 'home', icon: icons.home },
-      { name: 'bookmark', icon: icons.bookmark },
       { name: 'create', icon: icons.plus },
-      { name: 'profile', icon: icons.profile },
     ].map(({ name, icon }) => (
       <Tabs.Screen
         key={name}
@@ -57,21 +55,6 @@ const _layout = () => (
         }}
       />
     ))}
-    {/* <Tabs.Screen
-        name='home'
-        options={{
-          title: 'Home' ,
-          headerShown: false,
-          tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              icon={icons.home}
-              color={color}
-              name='Home'
-              focused={focused}
-            />
-          )
-        }}
-      /> */}
   </Tabs>
 );
 
